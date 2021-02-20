@@ -5,6 +5,7 @@
     <div class="text-center">
       <form class="site-form" action="/monActivite/article/{{article.titre}}/" method="POST">
         {% csrf_token %}
+
         {{ article.titre }}
         {{ article.description_longue }}
         {{ article.auteur }}

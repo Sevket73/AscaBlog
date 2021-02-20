@@ -10,22 +10,21 @@ def monActivite_ind(request):
     data = {'articles': articles}
     return render(request,'monActivite/monActivite_ind.html', data)
 
-def article_page(request, name):
+def article_page(request, id):
     try:
-        mon_article = Ascapost.objects.get(titre=name)
-        form = forms.NewCommentaire({'article_cible': mon_article,'ascanien': request.user})
+        mon_article = Ascapost.objects.get(id=id)
+        form = forms.NewCommentaire()
         data = {'form': form, 'article': mon_article}
         if request.method == 'POST':
             form = forms.NewCommentaire(request.POST)
             form.ascanien = request.user
             form.article_cible = mon_article
-            print(form.is_valid())
-            print('tqt')
-            print(type(form))
-            form.save()
-            return redirect('/monActivite/')
+            if form.is_valid():
+                form.save()
+                return redirect('/monActivite/')
         else:
-            form = forms.NewCommentaire({'article_cible': mon_article,'ascanien': request.user})
+            form = forms.NewCommentaire()
+            #form = forms.NewCommentaire({'article_cible': mon_article,'ascanien': request.user})
             data = {'form': form, 'article': mon_article}
         return render(request,'monActivite/article_ind.html',data)
     except Exception as e:
@@ -45,3 +44,8 @@ def newAscapost(request):
         form = forms.NewPost()
         data = {'form': form}
     return render(request,'monActivite/Nouveau_Ascapost_ind.html',data)
+
+def profilAscanien(request, name):
+    articles = Ascapost.objects.filter(auteur=name).values()
+    data = {'articles': articles}
+    return render(request,'monActivite/monActivite_ind.html', data)
