@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 
 class Ascapost(models.Model):
     titre = models.TextField(default='AscaTitre', max_length=400)
-    image = models.TextField(default='AscaImage')
+    image = models.ImageField(upload_to = 'imageBDPost/', default = 'imageBDPost/imagevide.png')
     description_courte = models.TextField(default='AscaDescription_courte', max_length=280 ) #Sera afficher lorsqu'un Ascanien a une vue globale sur tous les articles
     description_longue = models.TextField(default='AscaDescription_longue') #Sera afficher lorsqu'un Ascanien a une vue d'un article en détail
-    auteur =  models.TextField(default='auteur')
+    auteur =  models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     date = models.DateField(auto_now=True)
 
     def __str__(self):

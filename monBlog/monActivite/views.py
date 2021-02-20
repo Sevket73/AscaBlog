@@ -37,7 +37,7 @@ def newAscapost(request):
     if request.method == 'POST':
         form = forms.NewPost(request.POST)#,request.FILES
         if form.is_valid():
-            print(form)
+            print(form.errors)
             form.save()
             return redirect('/monActivite/')
     else:
