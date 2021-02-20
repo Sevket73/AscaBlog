@@ -1,0 +1,16 @@
+{% extends 'accueil/sqlt.html' %}
+{% block body %}
+<div class="container-fluid">
+  <div class="text-center">
+    <div class="text-center">
+      <h4><a href="Nouveau AscaPost"></a>C'est moi</h4>
+      <form class="site-form" action="/monActivite/Nouveau_Ascapost/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Publier">
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

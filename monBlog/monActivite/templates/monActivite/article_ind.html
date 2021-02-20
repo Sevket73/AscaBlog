@@ -1,0 +1,20 @@
+{% extends 'accueil/sqlt.html' %}
+{% block body %}
+<div class="container-fluid">
+  <div class="text-center">
+    <div class="text-center">
+      <form class="site-form" action="/monActivite/article/{{article.titre}}/" method="POST">
+        {% csrf_token %}
+        {{ article.titre }}
+        {{ article.description_longue }}
+        {{ article.auteur }}
+        {{ article.date }}
+
+        {{ form.commentaire }}
+        <input type="submit" value="Publier">
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
