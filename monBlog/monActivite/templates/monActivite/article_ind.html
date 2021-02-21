@@ -1,22 +1,23 @@
 {% extends 'accueil/sqlt.html' %}
+
 {% block body %}
 <div class="container-fluid">
   <div class="text-center">
     <div class="text-center">
-      <form class="site-form" action="/monActivite/article/{{article.titre}}/" method="POST">
+      <form class="site-form" action="/monActivite/article/{{article.id}}/" method="POST">
         {% csrf_token %}
 
-        {{ article.titre }}
-        <img src="/{{article.image}}" alt="/{{article.image}}" width="500" height="600">
-        {{ article.description_longue }}
-        {{ article.auteur }}
-        {{ article.date }}
+        {{ article.titre }}<br>
+        <!-- <img src="/{{article.image}}" alt="/{{article.image}}" width="500" height="600"> -->
+        {{ article.description_longue }}<br>
+        {{ article.auteur }}<br>
+        {{ article.date }}<br>
 
-        {{ form.commentaire }}
+
+        {{ form }}
         <input type="submit" value="Publier">
       </form>
     </div>
   </div>
 </div>
-
 {% endblock %}

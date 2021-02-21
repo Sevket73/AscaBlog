@@ -8,14 +8,13 @@ from .import forms
 @login_required(login_url='/comptes/inscription/')
 def monActivite_ind(request):
     articles = Ascapost.objects.filter(auteur_id=request.user.id).values
-    data = {'articles': articles}
+    commentaires = Commentary.objects.all()
+    data = {'articles': articles,'commentaires':commentaires}
     return render(request,'monActivite/monActivite_ind.html', data)
 
 def article_page(request, id):
     try:
         mon_article = Ascapost.objects.get(id=id)
-        form = forms.NewCommentaire()
-        data = {'form': form, 'article': mon_article}
         if request.method == 'POST':
             form = forms.NewCommentaire(request.POST)
             if form.is_valid():
@@ -25,8 +24,8 @@ def article_page(request, id):
                 return redirect('/monActivite/')
         else:
             form = forms.NewCommentaire()
-            #form = forms.NewCommentaire({'article_cible': mon_article,'ascanien': request.user})
-            data = {'form': form, 'article': mon_article}
+            commentaires = Commentary.objects.filter(article_cible=mon_article.id).values()
+            data = {'form': form, 'article': mon_article,'commentaires':commentaires}
         return render(request,'monActivite/article_ind.html',data)
     except Exception as e:
         print(e)
@@ -35,10 +34,14 @@ def article_page(request, id):
 
 @login_required(login_url='/comptes/inscription/')
 def newAscapost(request):
+
+    form = forms.NewPost()
+    data = {'form': form}
     if request.method == 'POST':
-        form = forms.NewPost(request.POST)#,request.FILES
+        form = forms.NewPost(request.POST)
         if form.is_valid():
-            print(form.errors)
+            form = form.save(commit=False)
+            form.auteur = request.user
             form.save()
             return redirect('/monActivite/')
     else:
@@ -51,3 +54,45 @@ def profilAscanien(request, name):
     name = User.objects.get(id=name)
     data = {'articles': mon_article,'auteur':name.username}
     return render(request,'monActivite/profilAscanien_ind.html', data)
+
+@login_required(login_url='/comptes/inscription/')
+def editPost(request, id):
+    post = Ascapost.objects.get( id=id)
+    form = forms.NewPost(instance = post)
+
+    if request.method == 'POST':
+        form = forms.NewPost(request.POST, instance = post)
+        if form.is_valid():
+            form.save()
+            return redirect('/monActivite/')
+    data = {'form' :form}
+    return render(request,'monActivite/editPost_ind.html',data)
+
+def deletePost(request, id):
+    post = Ascapost.objects.get( id=id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('/monActivite/')
+    data = {'post' :post}
+    return render(request,'monActivite/deletePost_ind.html',data)
+
+@login_required(login_url='/comptes/inscription/')
+def editComm(request, id):
+    post = Commentary.objects.get( id=id)
+    form = forms.NewPost(instance = post)
+
+    if request.method == 'POST':
+        form = forms.NewPost(request.POST, instance = post)
+        if form.is_valid():
+            form.save()
+            return redirect('/monActivite/')
+    data = {'form' :form}
+    return render(request,'monActivite/editComm_ind.html',data)
+
+def deleteComm(request, id):
+    post = Commentary.objects.get( id=id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('/monActivite/')
+    data = {'post' :post}
+    return render(request,'monActivite/deleteComm_ind.html',data)

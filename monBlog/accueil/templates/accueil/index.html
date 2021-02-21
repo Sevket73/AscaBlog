@@ -21,14 +21,33 @@
 
               <!-- Blog Post -->
               {% if articles %}
+              <!-- Articles -->
                 {% for article in articles %}
                 <div class="card mb-4">
+                  {% block param %}
+
+                  {% endblock %}
                   <img class="card-img-top" src="/{{article.image}}" alt="{{article.image}}">
                   <div class="card-body">
                     <h2 class="card-title">{% block ascatitre %}{{article.titre}}{% endblock %}</h2>
                     <p class="card-text">{% block descricourte %}{{article.description_courte}}{% endblock %}</p>
                     <a href="/monActivite/article/{% block id%}{{article.id}}{% endblock %}" class="btn btn-primary">Voir plus &rarr;</a>
                   </div>
+                    <ul class="list-group list-group-flush">
+                      <p class="card-text">Les Commentaires des Ascaniens : </p>
+                      {% block zoneComm %}
+                        {% for comm in commentaires %}
+                          {% if comm.article_cible.id == article.id %}
+                            <div class="card-body"><li class="list-group-item">{{comm.commentaire}} <br> Écrit par : {{comm.ascanien}}, <br>Le : {{comm.date}}</li></div>
+                          {% endif %}
+                        {% endfor %}
+                      {% endblock %}
+                  </ul>
+                  <ul class="list-group list-group-flush">
+                    <p class="card-text">Ton commentaire</p>
+                    <div class="card-body"><li class="list-group-item">Non fonctionnel</li></div>
+                    <!-- <li class="list-group-item">{{form.commentaire}}</li> -->
+                </ul>
                   <div class="card-footer text-muted">
                     Posté le {% block date %}{{article.date}}{% endblock %}
                     <a href="/monActivite/Ascanien/{% block auteur %}{{article.auteur_id}}{% endblock %}/">{{article.auteur}}</a>
@@ -44,6 +63,7 @@
                   </div>
                 </div>
               {% endif %}
+
               <!-- Pagination
               <ul class="pagination justify-content-center mb-4">
                 <li class="page-item">
@@ -62,14 +82,14 @@
              <div class="col-md-4">
                <!-- Side Widget -->
                <div class="card my-4">
-                 <h5 class="card-header">On peut mettre des trucs d'interessantes</h5>
+                 <h5 class="card-header">On peut mettre des messages interessants</h5>
                  <div class="card-body">
                    Comme par exemple l'avancement d'un projet, des deadlines, des @everyone des patrons, des messages ou même des pubs pour des projets perso !
                  </div>
                </div>
                <!-- Side Widget -->
                <div class="card my-4">
-                 <h5 class="card-header">Et on peut les stacker ! </h5>
+                 <h5 class="card-header">Et on peut les stacker !</h5>
                  <div class="card-body">
                    Pour en mettre plusieurs !
                  </div>

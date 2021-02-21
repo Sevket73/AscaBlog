@@ -1,0 +1,16 @@
+{% extends 'accueil/sqlt.html' %}
+{% block body %}
+<div class="container-fluid">
+  <div class="text-center">
+    <div class="text-center">
+      <h4>Suppression du commentaire</h4>
+      <form class="site-form" action="{% url 'deleteComm' form.id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Supprimer">
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -26,6 +26,5 @@ def connexion(request):
     return render(request,'comptes/connexion.html', {'form':form})
 
 def deconnexion(request):
-    #if request.method == 'POST':
     logout(request)
     return redirect('/')

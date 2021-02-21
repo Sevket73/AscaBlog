@@ -7,3 +7,26 @@ Mon profil
 {% block soustitre %}
 Mes AscaPosts
 {% endblock %}
+
+{% block param %}
+<div class="position-relative">
+  <div class="position-absolute top-0 end-0">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="image" src =" " id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="/monActivite/ModifieTonPost/{{article.id}}">Modifier</a>
+        <a class="dropdown-item" href="/monActivite/SupprimeTonPost/{{article.id}}">Supprimer</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block zoneComm %}
+  {% for comm in commentaires %}
+    {% if comm.article_cible.id == article.id %}
+      <div class="card-body"><li class="list-group-item">{{comm.commentaire}} <br> Écrit par : {{comm.ascanien}}, <br>Le : {{comm.date}}</li></div>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
