@@ -1,7 +1,7 @@
 {% extends 'accueil/sqlt.html' %}
 
 {% block lien_accueil %}
-#
+/
 {% endblock %}
 
 {% block body %}
@@ -15,53 +15,36 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-              <h1 class="my-4">Post d'Ascanien !
-                <small>Quoi de neuf ?</small>
+              <h1 class="my-4">{% block titre %}Post d'Ascanien !{% endblock %}
+                <small>{% block soustitre %}Quoi de neuf ?{% endblock %}</small>
               </h1>
 
               <!-- Blog Post -->
-              <div class="card mb-4">
-                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-                <div class="card-body">
-                  <h2 class="card-title">Post Title</h2>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                  <a href="#" class="btn btn-primary">Read More &rarr;</a>
+              {% if articles %}
+                {% for article in articles %}
+                <div class="card mb-4">
+                  <img class="card-img-top" src="/{{article.image}}" alt="{{article.image}}">
+                  <div class="card-body">
+                    <h2 class="card-title">{% block ascatitre %}{{article.titre}}{% endblock %}</h2>
+                    <p class="card-text">{% block descricourte %}{{article.description_courte}}{% endblock %}</p>
+                    <a href="/monActivite/article/{% block id%}{{article.id}}{% endblock %}" class="btn btn-primary">Voir plus &rarr;</a>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Posté le {% block date %}{{article.date}}{% endblock %}
+                    <a href="/monActivite/Ascanien/{% block auteur %}{{article.auteur_id}}{% endblock %}/">{{article.auteur}}</a>
+                  </div>
                 </div>
-                <div class="card-footer text-muted">
-                  Posted on January 1, 2020 by
-                  <a href="#">Start Bootstrap</a>
+                {% endfor %}
+              {% else %}
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h2 class="card-title">Bienvenue à bord jeune Ascanien !</h2>
+                    <p class="card-text">Cliquez juste en dessous pour créer votre premier AscaPost !</p>
+                    <a href="/monActivite/Nouveau_Ascapost/" class="btn btn-primary">C'est par ici ! &rarr;</a>
+                  </div>
                 </div>
-              </div>
-
-              <!-- Blog Post -->
-              <div class="card mb-4">
-                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-                <div class="card-body">
-                  <h2 class="card-title">Post Title</h2>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                  <a href="#" class="btn btn-primary">Read More &rarr;</a>
-                </div>
-                <div class="card-footer text-muted">
-                  Posted on January 1, 2020 by
-                  <a href="#">Start Bootstrap</a>
-                </div>
-              </div>
-
-              <!-- Blog Post -->
-              <div class="card mb-4">
-                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-                <div class="card-body">
-                  <h2 class="card-title">Post Title</h2>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                  <a href="#" class="btn btn-primary">Read More &rarr;</a>
-                </div>
-                <div class="card-footer text-muted">
-                  Posted on January 1, 2020 by
-                  <a href="#">Start Bootstrap</a>
-                </div>
-              </div>
-
-              <!-- Pagination -->
+              {% endif %}
+              <!-- Pagination
               <ul class="pagination justify-content-center mb-4">
                 <li class="page-item">
                   <a class="page-link" href="#">&larr; Older</a>
@@ -71,21 +54,34 @@
               </li>
             </ul>
 
-          </div>
+            Je n'ai pas mis la priorité à la pagination mais elle est là
 
+            -->
+          </div>
+          <!-- Sidebar Widgets Column -->
+             <div class="col-md-4">
+               <!-- Side Widget -->
+               <div class="card my-4">
+                 <h5 class="card-header">On peut mettre des trucs d'interessantes</h5>
+                 <div class="card-body">
+                   Comme par exemple l'avancement d'un projet, des deadlines, des @everyone des patrons, des messages ou même des pubs pour des projets perso !
+                 </div>
+               </div>
+               <!-- Side Widget -->
+               <div class="card my-4">
+                 <h5 class="card-header">Et on peut les stacker ! </h5>
+                 <div class="card-body">
+                   Pour en mettre plusieurs !
+                 </div>
+               </div>
+             </div>
         </div>
         <!-- /.row -->
 
       </div>
       <!-- /.container -->
 
-       <!-- Footer -->
-       <footer class="py-5 bg-dark">
-         <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
-        </div>
-        <!-- /.container -->
-      </footer>
+
 
 
     </body>

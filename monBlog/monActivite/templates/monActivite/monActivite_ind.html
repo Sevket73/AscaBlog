@@ -1,13 +1,9 @@
-{% extends 'accueil/sqlt.html' %}
-{% block body %}
-  <h1>monActivite_ind</h1>
-  <br>
-  <h3>Liste des Articles</h3>
-  <br>
+{% extends 'accueil/index.html' %}
 
-  {% for article in articles %}
-    <h4><a href="/monActivite/article/{{article.id}}">{{article.titre}}</a></h4>
-    <p>{{article.description_courte}}</p>
-  {% endfor %}
+{% block titre %}
+Mon profil
+{% endblock %}
 
+{% block soustitre %}
+Mes AscaPosts
 {% endblock %}

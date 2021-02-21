@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from .models import Ascapost, Commentary
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from .import forms
 
 
 @login_required(login_url='/comptes/inscription/')
 def monActivite_ind(request):
-    articles = Ascapost.objects.all()
+    articles = Ascapost.objects.filter(auteur_id=request.user.id).values
     data = {'articles': articles}
     return render(request,'monActivite/monActivite_ind.html', data)
 
@@ -17,9 +18,9 @@ def article_page(request, id):
         data = {'form': form, 'article': mon_article}
         if request.method == 'POST':
             form = forms.NewCommentaire(request.POST)
-            form.ascanien = request.user
-            form.article_cible = mon_article
             if form.is_valid():
+                form.ascanien = request.user
+                form.article_cible = mon_article
                 form.save()
                 return redirect('/monActivite/')
         else:
@@ -46,6 +47,7 @@ def newAscapost(request):
     return render(request,'monActivite/Nouveau_Ascapost_ind.html',data)
 
 def profilAscanien(request, name):
-    articles = Ascapost.objects.filter(auteur=name).values()
-    data = {'articles': articles}
-    return render(request,'monActivite/monActivite_ind.html', data)
+    mon_article = Ascapost.objects.filter(auteur_id=name).values()
+    name = User.objects.get(id=name)
+    data = {'articles': mon_article,'auteur':name.username}
+    return render(request,'monActivite/profilAscanien_ind.html', data)

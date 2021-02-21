@@ -25,9 +25,15 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% block lien_accueil %}/{% endblock %}">Accueil</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/monActivite">Mon profil</a>
-          </li>
+          {% if not request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="/monActivite">Mon profil</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/monActivite">{{ request.user.username }}</a>
+            </li>
+            {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="/monActivite/Nouveau_Ascapost">Un nouveau Ascapost !</a>
           </li>
@@ -58,4 +64,11 @@
   </nav>
   {% block body %}{% endblock %}
 </body>
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+  <div class="container">
+ <p class="m-0 text-center text-white">Sevket &copy; AscaBlog 2021</p>
+ </div>
+ <!-- /.container -->
+</footer>
 </html>
