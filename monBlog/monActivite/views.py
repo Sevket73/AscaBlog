@@ -7,23 +7,34 @@ from .import forms
 
 @login_required(login_url='/comptes/inscription/')
 def monActivite_ind(request):
-    articles = Ascapost.objects.filter(auteur_id=request.user.id).values
+    articles = Ascapost.objects.filter(auteur_id=request.user.id).order_by('-id').values
     commentaires = Commentary.objects.all()
     data = {'articles': articles,'commentaires':commentaires}
     return render(request,'monActivite/monActivite_ind.html', data)
 
 def article_page(request, id):
     try:
+        form = forms.NewCommentaire()
         mon_article = Ascapost.objects.get(id=id)
         if request.method == 'POST':
             form = forms.NewCommentaire(request.POST)
             if form.is_valid():
-                form.ascanien = request.user
+                form = form.save(commit=False)
+                if request.user.is_authenticated:
+                    form.ascanien = request.user
+                else:
+                    try:
+                        user = User.objects.get(username='Ascanien Anonyme')
+                        form.ascanien = user
+                    except Exception as e:
+                        user = User.objects.create_user(username='Ascanien Anonyme',
+                                     email='aaa@aaa.com',
+                                     password='')
+                        form.ascanien = user
                 form.article_cible = mon_article
                 form.save()
-                return redirect('/monActivite/')
+                return redirect('/')
         else:
-            form = forms.NewCommentaire()
             commentaires = Commentary.objects.filter(article_cible=mon_article.id).values()
             data = {'form': form, 'article': mon_article,'commentaires':commentaires}
         return render(request,'monActivite/article_ind.html',data)

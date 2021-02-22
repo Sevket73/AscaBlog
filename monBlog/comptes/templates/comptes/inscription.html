@@ -7,10 +7,31 @@
       <h4>inscription</h4>
       <form class="site-form" action="/comptes/inscription/" method="POST">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Inscription">
-      </form>
-    </div>
+        <div class="form-group">
+          {{form.username.errors}}
+          <label for="id_titre">Pseudo :</label>
+          {{form.username}}
+          <small class="form-text text-muted">Requis: 150 caractères ou moins. Lettre, chiffre et @/./+/-/_ uniquement.</small>
+        </div>
+        <div class="form-group">
+          {{form.password1.errors}}
+          <label for="id_image">Mot de passe :</label>
+          {{form.password1}}
+          <small class="form-text text-muted">Votre mot de passe ne peut pas être similaire à vos informations personnelles.<br>
+            Votre mot de passe doit contenir au moins 8 caractères.<br>
+            Votre mot de passe ne peut être un mot de passe commun. (ex : abc123456)<br>
+            Votre mot de passe ne peut contenir uniquement des chiffres.</small>
+        </div>
+        <div class="form-group">
+          {{form.password2.errors}}
+          <label for="id_image">Mot de passe pour confirmation :</label>
+          {{form.password2}}
+        </div>
+
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
+         </form>
+         <a href="/comptes/login/">Se connecter</a>
+        </div>
   </div>
 </div>
 

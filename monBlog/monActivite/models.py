@@ -15,7 +15,7 @@ class Ascapost(models.Model):
 
 #ici la liste des commentaires de tous les articles
 class Commentary(models.Model):
-    ascanien = models.ForeignKey(User, on_delete=models.CASCADE, default='Anonyme')
+    ascanien = models.ForeignKey(User, on_delete=models.CASCADE, default='Ascanien')
     commentaire = models.TextField(max_length=280)
     date = models.DateField(auto_now=True)
     article_cible = models.ForeignKey(Ascapost, on_delete=models.CASCADE, default='Ascapost') #cette ligne permet de faire le lien entre le commentaire et l'article concerné

@@ -16,4 +16,10 @@ class NewPost(forms.ModelForm):
 class NewCommentaire(forms.ModelForm):
     class Meta:
         model = models.Commentary
-        fields = ['ascanien','commentaire','article_cible']
+        fields = ['commentaire']
+        exclude = ['ascanien','article_cible']
+
+    def __init__(self, *args, **kwargs):
+        super(NewCommentaire, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'

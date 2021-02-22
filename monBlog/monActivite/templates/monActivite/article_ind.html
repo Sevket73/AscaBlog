@@ -6,9 +6,10 @@
     <div class="text-center">
       <form class="site-form" action="/monActivite/article/{{article.id}}/" method="POST">
         {% csrf_token %}
-
+        <h6>On a connu mieux comme interface.</h6>
         {{ article.titre }}<br>
         <!-- <img src="/{{article.image}}" alt="/{{article.image}}" width="500" height="600"> -->
+        <p>Il y a théoriquement une image mais c'est commenté dans le code...</p>
         {{ article.description_longue }}<br>
         {{ article.auteur }}<br>
         {{ article.date }}<br>

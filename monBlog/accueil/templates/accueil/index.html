@@ -27,7 +27,8 @@
                   {% block param %}
 
                   {% endblock %}
-                  <img class="card-img-top" src="/{{article.image}}" alt="{{article.image}}">
+                  <!-- <img class="card-img-top" src="/{{article.image}}" alt="{{article.image}}"> -->
+                  <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
                   <div class="card-body">
                     <h2 class="card-title">{% block ascatitre %}{{article.titre}}{% endblock %}</h2>
                     <p class="card-text">{% block descricourte %}{{article.description_courte}}{% endblock %}</p>
@@ -44,9 +45,15 @@
                       {% endblock %}
                   </ul>
                   <ul class="list-group list-group-flush">
-                    <p class="card-text">Ton commentaire</p>
-                    <div class="card-body"><li class="list-group-item">Non fonctionnel</li></div>
-                    <!-- <li class="list-group-item">{{form.commentaire}}</li> -->
+                    <p class="card-text">Ton commentaire :</p>
+                    <div class="card-body">
+                      Indisponible ...
+                    </div>
+                    <!-- <form class="" action="" method="post">
+                      {% csrf_token %}
+                      <li class="list-group-item">{{form.commentaire}}</li>
+                      <input type="submit" value="Commentez">
+                    </form> -->
                 </ul>
                   <div class="card-footer text-muted">
                     Posté le {% block date %}{{article.date}}{% endblock %}
@@ -58,8 +65,8 @@
                 <div class="card mb-4">
                   <div class="card-body">
                     <h2 class="card-title">Bienvenue à bord jeune Ascanien !</h2>
-                    <p class="card-text">Cliquez juste en dessous pour créer votre premier AscaPost !</p>
-                    <a href="/monActivite/Nouveau_Ascapost/" class="btn btn-primary">C'est par ici ! &rarr;</a>
+                    {% block postvide %}<p class="card-text">Aucun article disponible, la base de donnée doit être vide.<br>Il suffit de cliquer sur le bouton pour créer un AscaPost !</p>{% endblock %}
+                    <a href="/monActivite/Nouveau_Ascapost/" class="btn btn-primary">C'est par ici !</a>
                   </div>
                 </div>
               {% endif %}
@@ -84,7 +91,7 @@
                <div class="card my-4">
                  <h5 class="card-header">On peut mettre des messages interessants</h5>
                  <div class="card-body">
-                   Comme par exemple l'avancement d'un projet, des deadlines, des @everyone des patrons, des messages ou même des pubs pour des projets perso !
+                   Comme par exemple l'avancement d'un projet, des deadlines, des messages ou même des pubs pour des projets perso !
                  </div>
                </div>
                <!-- Side Widget -->
